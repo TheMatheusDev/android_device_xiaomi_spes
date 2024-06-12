@@ -376,6 +376,7 @@ PRODUCT_COPY_FILES += \
 
 # Overlays
 PRODUCT_PACKAGES += \
+    DeviceAsWebcamOverlay \
     SpesApertureOverlay \
     SpesCarrierConfigOverlay \
     SpesDialerOverlay \
