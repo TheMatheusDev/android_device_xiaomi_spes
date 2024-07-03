@@ -211,7 +211,6 @@ VENDOR_SECURITY_PATCH := 2023-07-01
 
 # VNDK
 BOARD_VNDK_VERSION := current
-NEED_AIDL_NDK_PLATFORM_BACKEND := true
 
 # Sepolicy
 include device/lineage/sepolicy/libperfmgr/sepolicy.mk
