@@ -108,6 +108,8 @@ PRODUCT_PACKAGES += \
     audio.usb.default
 
 PRODUCT_PACKAGES += \
+    libaudioroute \
+    libaudioroute.vendor \
     libaudio-resampler \
     libaudioroute.vendor \
     libprocessgroup.vendor \
