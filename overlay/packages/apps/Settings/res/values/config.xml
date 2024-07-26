@@ -27,4 +27,7 @@
     <string name="config_batCurCap" translatable="false">/sys/class/power_supply/bms/charge_counter</string>
     <string name="config_batDesCap" translatable="false">/sys/class/power_supply/bms/charge_full</string>
     <string name="config_batChargeCycle" translatable="false">/sys/class/power_supply/bms/cycle_count</string>
+
+    <!-- About device screen, build maintainer -->
+    <string name="build_maintainer_summary">Redznn</string>
 </resources>
