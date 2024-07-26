@@ -75,12 +75,14 @@ TARGET_NO_BOOTLOADER := true
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_INCORRECT_PARTITION_IMAGES := true
+BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
 RELAX_USES_LIBRARY_CHECK=true
 
 # Configs File System
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/configs/config.fs
 
 # Display
+TARGET_SCREEN_DENSITY := 440
 TARGET_USES_COLOR_METADATA := true
 TARGET_USES_DISPLAY_RENDER_INTENTS := true
 TARGET_USES_DRM_PP := true
@@ -89,15 +91,8 @@ TARGET_USES_GRALLOC4 := true
 TARGET_USES_HWC2 := true
 TARGET_USES_ION := true
 
-# DTBO image
-BOARD_KERNEL_SEPARATED_DTBO := true
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-
 # FM
 BOARD_HAVE_QCOM_FM := true
-
-# Metadata
-BOARD_USES_METADATA_PARTITION := true
 
 # HALs
 QCOM_SOONG_NAMESPACE := $(DEVICE_PATH)/hals
@@ -110,15 +105,9 @@ TARGET_USES_CUSTOM_DISPLAY_INTERFACE := true
 TARGET_OTA_ASSERT_DEVICE := spes,spesn
 
 # HIDL
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
-    $(DEVICE_PATH)/configs/hidl/framework_compatibility_matrix.xml
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += $(DEVICE_PATH)/configs/hidl/framework_compatibility_matrix.xml
 DEVICE_MATRIX_FILE += $(DEVICE_PATH)/configs/hidl/compatibility_matrix.xml
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/configs/hidl/manifest.xml
-ifeq ($(PRODUCT_NAME), lineage_spes)
-DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/configs/hidl/manifest-lineage.xml
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
-    $(DEVICE_PATH)/configs/hidl/framework_compatibility_matrix-lineage.xml
-endif
 ODM_MANIFEST_SKUS += k7tn
 ODM_MANIFEST_K7TN_FILES := $(DEVICE_PATH)/configs/hidl/manifest_k7tn.xml
 
@@ -137,10 +126,6 @@ BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_RAMDISK_OFFSET     := 0x01000000
 BOARD_TAGS_OFFSET        := 0x00000100
 
-BOARD_BOOT_HEADER_VERSION := 3
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-
-
 BOARD_KERNEL_CMDLINE += \
     androidboot.console=ttyMSM0 \
     androidboot.hardware=qcom \
@@ -155,19 +140,15 @@ BOARD_KERNEL_CMDLINE += \
     swiotlb=2048 \
     kpti=off
 
-TARGET_KERNEL_ARCH := arm64
+BOARD_BOOT_HEADER_VERSION := 3
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_KERNEL_SEPARATED_DTBO := true
+
+TARGET_KERNEL_SOURCE := kernel/xiaomi/spes
 TARGET_KERNEL_CONFIG := vendor/spes-perf_defconfig
-TARGET_KERNEL_HEADERS := kernel/xiaomi/sm6225
-TARGET_KERNEL_SOURCE := kernel/xiaomi/sm6225
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_LINUX_KERNEL_VERSION := 4.19
-TARGET_KERNEL_CLANG_VERSION := r450784e
-
-# Lineage Health
-TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_BYPASS := false
-
-# LMKD
-TARGET_LMKD_STATS_LOG := true
 
 # Media
 TARGET_DISABLED_UBWC := true
@@ -200,6 +181,7 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+BOARD_USES_METADATA_PARTITION := true
 
 TARGET_COPY_OUT_PRODUCT := product
 TARGET_COPY_OUT_SYSTEM_EXT := system_ext
@@ -207,20 +189,20 @@ TARGET_COPY_OUT_VENDOR := vendor
 
 # Platform
 BOARD_VENDOR := xiaomi
+BOARD_USES_QCOM_HARDWARE := true
 TARGET_BOARD_PLATFORM := bengal
 
-# Power
-TARGET_TAP_TO_WAKE_NODE := "/sys/touchpanel/double_tap"
-
 # Properties
-TARGET_ODM_PROP += $(DEVICE_PATH)/odm.prop
-TARGET_PRODUCT_PROP += $(DEVICE_PATH)/product.prop
-TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/system_ext.prop
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
+TARGET_ODM_PROP += $(DEVICE_PATH)/configs/props/odm.prop
+TARGET_PRODUCT_PROP += $(DEVICE_PATH)/configs/props/product.prop
+TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/configs/props/system_ext.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/configs/props/system.prop
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/configs/props/vendor.prop
 
-# QCOM
-BOARD_USES_QCOM_HARDWARE := true
+# Recovery
+BOARD_USES_RECOVERY_AS_BOOT := true
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
 # Releasetools
 TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
@@ -228,35 +210,20 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 # RIL
 ENABLE_VENDOR_RIL_SERVICE := true
 
-# Recovery
-BOARD_USES_RECOVERY_AS_BOOT := true
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-
-# Screen density
-TARGET_SCREEN_DENSITY := 440
-
 # Security patch level
 VENDOR_SECURITY_PATCH := 2023-07-01
-
-# Sensor multi HAL
-USE_SENSOR_MULTI_HAL := true
 
 # VNDK
 BOARD_VNDK_VERSION := current
 NEED_AIDL_NDK_PLATFORM_BACKEND := true
 
 # Sepolicy
-include device/derp/sepolicy/libperfmgr/sepolicy.mk
+include device/lineage/sepolicy/libperfmgr/sepolicy.mk
 include device/qcom/sepolicy_vndr/legacy-um/SEPolicy.mk
 
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
-ifdef CR_VERSION
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private-cr
-endif
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
-BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
 
 # WiFi
 BOARD_WLAN_DEVICE := qcwcn
