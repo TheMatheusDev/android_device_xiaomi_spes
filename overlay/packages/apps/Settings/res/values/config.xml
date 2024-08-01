@@ -29,5 +29,5 @@
     <string name="config_batChargeCycle" translatable="false">/sys/class/power_supply/bms/cycle_count</string>
 
     <!-- About device screen, build maintainer -->
-    <string name="build_maintainer_summary">Redznn</string>
+    <string name="build_maintainer_summary">Ascending</string>
 </resources>
