@@ -90,4 +90,7 @@
      low powered state yet. -->
     <bool name="doze_long_press_uses_prox">false</bool>
 
+    <!-- Whether show refresh rate QS tile -->
+    <bool name="config_showRefreshRateQsTile">true</bool>
+
 </resources>
