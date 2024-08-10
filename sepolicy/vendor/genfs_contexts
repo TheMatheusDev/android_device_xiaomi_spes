@@ -58,7 +58,6 @@ genfscon sysfs /devices/virtual/mi_memory/mi_memory_device/ddr/ddr_vendor       
 genfscon sysfs /devices/virtual/mi_memory/mi_memory_device/ufshcd0/                                 u:object_r:vendor_sysfs_memory:s0
 
 # Power Supply
-# Battery
 genfscon sysfs /class/power_supply/battery/capacity                                                                                    u:object_r:vendor_sysfs_battery_supply:s0
 genfscon sysfs /class/power_supply/bms                                                                                                 u:object_r:vendor_sysfs_battery_supply:s0
 genfscon sysfs /devices/platform/soc/4a84000.i2c/i2c-0/0-0055/power_supply/bms                                                         u:object_r:vendor_sysfs_battery_supply:s0
@@ -110,8 +109,9 @@ genfscon sysfs /devices/platform/soc/4a84000.i2c/i2c-0/0-0065/power_supply/sc855
 genfscon sysfs /devices/platform/soc/4a84000.i2c/i2c-0/0-0066/power_supply/sc8551-standalone/power/wakeup                              u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/soc/soc:maxim_ds28e16/power_supply/batt_verify/power/wakeup                                           u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/soc/soc:maxim_ds28e16/power_supply/batt_verify/wakeup                                                 u:object_r:sysfs_wakeup:s0
-genfscon sysfs /devices/platform/soc/soc:maxim_ds28e16/power_supply/batt_verify/wakeup1                                                u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/soc:maxim_ds28e16/power_supply/batt_verify/wakeup1                                                u:object_r:vendor_sysfs_battery_supply:s0
 genfscon sysfs /devices/platform/soc/soc:maxim_ds28e16/power_supply/batt_verify/wakeup1/event_count                                    u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/4a84000.i2c/i2c-0/0-0071/power_supply/bms/wakeup36                                                u:object_r:vendor_sysfs_battery_supply:s0
 
 # UFS
 genfscon sysfs /devices/platform/soc/4804000.ufshc/clkgate_enable                                   u:object_r:vendor_sysfs_scsi_host:s0
